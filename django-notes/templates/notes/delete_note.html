@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="margin-top:40px; padding:5px;">Delete Note</h2>
+<style>
+  form {padding:10px;}
+  label {color:white; font-size: 18px;}
+  .form-div {background-color: black; color: white;}
+  button {border-radius:10px; }
+  textarea {font-size: 12px; width: 500px; background-color:rgba(226, 234, 238, 0.817);}
+  input {width:300px;}
+  a {color: white; text-decoration: none; padding: 4px; margin-top: 5px;}
+</style>
+
+<div class='form-div'>
+  <form action="{% url 'delete_note' pk=note.pk %}" method="POST">
+    {% csrf_token %}
+    <p><em>Are you sure you want to delete? </em> <br>{{ note.title }} </p>
+    <div>
+      <button type="submit">Delete Note</button><br />
+      <a href="{% url 'notes_list' %}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

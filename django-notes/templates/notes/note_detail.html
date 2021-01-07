@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load tz %}
+
+{% block content %}
+<!-- <div style="padding: 5px; padding-bottom:30px;"> -->
+  <!-- <div style="margin-left:20px; padding: 5px; padding-bottom:20px; background-color:white; border-radius: 10px;" > -->
+<div class='note-list-container p5 pb50'>
+  <h2><strong>{{ note.title }}</strong></h2>
+
+  {% if note.labels %}
+  
+  <div class='flex'>
+    {% for label in note.labels.all %}
+    <p class='label-button'> {{ label }}</p>
+    {% endfor %}
+  </div>
+
+  {% endif %}
+
+  <p class='note-detail-preview'>{{ note.body }}</p>
+
+  {% localtime on %}
+  
+  <p><strong>Created at:</strong> {{ note.created_at }}</p>
+  <p><strong>Last Updated at:</strong> {{ note.modified_at }}</p>
+  
+  {% endlocaltime %}
+
+  <a class='button-function edit' href="{% url 'edit_note' pk=note.pk %}">Edit</a>
+  <a class='button-function delete' href="{% url 'delete_note' pk=note.pk %}">Delete</a>
+  
+  <br>
+
+</div>
+
+{% endblock %}

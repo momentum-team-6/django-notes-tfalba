@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='ml20' >
+  <p><a class='note-button' href="{% url 'add_note' %}">New Note</a></p>
+</div>
+
+<div class="form-div">
+  <form class='search-form' action="{% url 'notes_list' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class='search-submit'>
+      <button class='button-function' type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+
+{% if labels %}
+    <div class='flex ml20'>
+      {% for label in labels %}
+      <form style="text-align:center;" action="#" method="get">
+        <input class='label-button' type="submit" value={{ label }} name='labels'/>
+      </form>
+
+      <!-- <p class='label-button'> {{ label }}</p> -->
+      {% endfor %}
+      <form style="text-align:center;" action="#" method="get">
+        <input class='label-button' type="submit" value='All' name='labels'/>
+      </form>
+
+    </div>
+{% endif %}
+
+
+<div class='note-list-container'>
+<hr>
+<ul class='note-list' >
+{% for note in notes %}
+  <style>#trigger{{ note.id }} {display: none;}</style>
+  <style>#trigger{{ note.id }}:checked + .box {
+    display: block;
+    padding: 10px;
+    width: 95%;
+    color: rgb(38, 7, 61);
+    border-radius: 10px;}
+  </style>
+
+  <li>
+    <label class="fs25 fw400 flex"  for="trigger{{ note.id }}">{{ note.title }}<p class='view-hide'>X</p></label>
+    {% if note.labels %}
+    <div class='flex'>
+      {% for label in note.labels.all %}
+      <form style="text-align:center;" action="#" method="get">
+        <input class='label-button' type="submit" value={{ label }} name='labels'/>
+      </form>
+
+      <!-- <p class='label-button'> {{ label }}</p> -->
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <input id="trigger{{ note.id }}" type="checkbox">
+    <div class="box">
+      <div class='note-detail-preview'>
+        {{ note.body }}
+      </div>
+      <div class='mt15'>
+        <a class='button-function detail' href="{% url 'note_detail' pk=note.pk %}">Detail</a>
+        <a class='button-function edit' href="{% url 'edit_note' pk=note.pk %}">Edit</a>
+        <a class='button-function delete' href="{% url 'delete_note' pk=note.pk %}">Delete</a>
+      </div>
+    </div>
+    <hr>
+  </li>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}
