@@ -19,6 +19,9 @@ class Note(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     labels = models.ManyToManyField('Label', related_name='notes', help_text='Select any tags for this note')
     
+    class Meta:
+        ordering = ['title', '-created_at']
+    
     def __str__(self):
         return f'{self.title}'
 

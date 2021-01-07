@@ -27,7 +27,7 @@ def list_notes(request):
 def note_detail(request, pk):
   note = get_object_or_404(Note, pk=pk)
   labels = Label.objects.filter(notes=note)
-  comments = Comment.objects.filter(note=note)
+  comments = Comment.objects.filter(note=note).order_by('text')
 
   return render(request, "notes/note_detail.html", {"note": note, "labels": labels, "comments": comments})
 
