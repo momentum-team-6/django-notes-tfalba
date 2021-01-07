@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Note, Label
+from .models import Note, Label, Comment
 from .data import NOTES
-from .forms import NoteForm, SearchForm
+from .forms import NoteForm, SearchForm, CommentForm
 import requests
 
 def list_notes(request):
@@ -9,7 +9,7 @@ def list_notes(request):
   if request.method == 'POST':
     form = SearchForm(data=request.POST)
     if form.is_valid():
-      my_search_term = form.data['search_term']
+      my_search_term = form.cleaned_data['search_term']
       notes = Note.objects.filter(body__icontains=my_search_term)
   elif request.GET.get('labels'):
     form = SearchForm()
@@ -27,7 +27,9 @@ def list_notes(request):
 def note_detail(request, pk):
   note = get_object_or_404(Note, pk=pk)
   labels = Label.objects.filter(notes=note)
-  return render(request, "notes/note_detail.html", {"note": note, "labels": labels})
+  comments = Comment.objects.filter(note=note)
+
+  return render(request, "notes/note_detail.html", {"note": note, "labels": labels, "comments": comments})
 
 def add_note(request):
   if request.method == 'GET':
@@ -47,7 +49,7 @@ def edit_note(request, pk):
     form = NoteForm(data=request.POST, instance=note)
     if form.is_valid():
       form.save()
-      return redirect(to='notes_list')
+      return redirect(to='note_detail', pk=pk)
   return render(request, "notes/edit_note.html", {
     "form": form,
     "note": note
@@ -62,6 +64,18 @@ def delete_note(request, pk):
     "note": note
   })
 
+def add_comment(request, pk):
+  note = get_object_or_404(Note, pk=pk)
+  if request.method == 'GET':
+    form = CommentForm()
+  else:
+    form = CommentForm(data=request.POST)
+    if form.is_valid():
+      new_comment = form.save(commit=False)
+      new_comment.note = note
+      new_comment.save()
+      return redirect(to='note_detail', pk=pk)
+  return render(request, "notes/add_comment.html", {"note": note, "form": form})
 
 def label_filter(request):
 

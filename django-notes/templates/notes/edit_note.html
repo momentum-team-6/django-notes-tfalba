@@ -4,12 +4,6 @@
 <div class='new-note-div flex'>
   <p class='note-button'>Edit Note</p>
 </div>
-<style>
-  label {color:white; font-size: 18px;}
-  textarea {font-size: 14px; width: 90%; background-color:rgba(244, 249, 252, 0.993);}
-  input {width:50%;}
-  span.helptext {color:white;}
-</style>
 
 <div class="form-div">
   <form action="{% url 'edit_note' pk=note.pk %}" method="POST">

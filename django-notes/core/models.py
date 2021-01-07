@@ -18,12 +18,20 @@ class Note(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     labels = models.ManyToManyField('Label', related_name='notes', help_text='Select any tags for this note')
-
+    
     def __str__(self):
         return f'{self.title}'
 
     def get_absolute_url(self):
         return reverse('note-detail', args=[str(self.id)])
+
+class Comment(models.Model):
+    text = models.TextField(max_length=1000, null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    note = models.ForeignKey(Note, related_name='comments', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.text}'
 
 
 class User(AbstractUser):

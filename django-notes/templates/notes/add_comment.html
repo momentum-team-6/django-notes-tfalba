@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+<!-- This template will handle the comment adding in a similar way to adding the notes themselves -->
+{% block content %}
+<!-- Send single note through in context -->
+<div class='new-note-div flex'>
+  <p class='note-button'>Create Comment for Note:</p>
+</div>
+
+<div class='note-list-container p5 pb50'>
+  <h2><strong>{{ note.title }}</strong></h2>
+
+  {% if note.labels %}
+  
+  <div class='flex'>
+    {% for label in note.labels.all %}
+    <p class='label-button'> {{ label }}</p>
+    {% endfor %}
+  </div>
+
+  {% endif %}
+
+  <p class='note-detail-preview'>{{ note.body }}</p>
+  
+  <p><strong>Created at:</strong> {{ note.created_at }}</p>
+  <p><strong>Last Updated at:</strong> {{ note.modified_at }}</p>
+  
+  <br>
+</div>
+<div class="form-div">
+  <form  action="{% url 'add_comment' pk=note.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div>
+      <button class='button-function' type="submit">Add Note</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

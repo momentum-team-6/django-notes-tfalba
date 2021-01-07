@@ -5,7 +5,7 @@
   <p><a class='note-button' href="{% url 'add_note' %}">New Note</a></p>
 </div>
 
-<div class="form-div">
+<div class="search-form-div">
   <form class='search-form' action="{% url 'notes_list' %}" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
@@ -21,9 +21,8 @@
       <form style="text-align:center;" action="#" method="get">
         <input class='label-button' type="submit" value={{ label }} name='labels'/>
       </form>
-
-      <!-- <p class='label-button'> {{ label }}</p> -->
       {% endfor %}
+      <!-- Sends one final form for collecting all labels that is hardcoded in the view -->
       <form style="text-align:center;" action="#" method="get">
         <input class='label-button' type="submit" value='All' name='labels'/>
       </form>
@@ -53,8 +52,6 @@
       <form style="text-align:center;" action="#" method="get">
         <input class='label-button' type="submit" value={{ label }} name='labels'/>
       </form>
-
-      <!-- <p class='label-button'> {{ label }}</p> -->
       {% endfor %}
     </div>
     {% endif %}

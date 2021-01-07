@@ -13,12 +13,16 @@
   margin-left:20px;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   background-image: url("../images/pexels-caryn-938165.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 300px;
+  padding-bottom: 200px;
+  background-color: rgb(17, 17, 17);
 }
 
 .content-block {
   display:flex; 
   flex-direction: column; 
-  width:90%;
+  width:95%;
 }
 
 .box {
@@ -119,22 +123,68 @@
   border: solid 4px white; 
   text-decoration: none;
 }
-
-.form-div {
+.form-div, .search-form-div {
   background-color: rgba(0, 0, 0, 0.627);
   padding: 10px;
   color: white;
   margin-left: 20px;
   display:flex;
-  justify-content: flex-end;
+}
+
+.search-form-div form {
+  color: white;
 }
 
 .form-div form {
+  color:white;
+  width: 95%;
+}
+
+.form-div form p {
+  display: flex;
+}
+.form-div label, .form-div select {
+  margin-right: 10px;
+}
+.form-div label {
+  font-size: 18px;
+}
+.form-div span {
+  font-size: 15px;
+  color: white;
+}
+
+.form-div select {
+  font-size: 16px;
+}
+
+.form-div textarea, .form-div input, .form-div select {
+  border-radius: 10px;
+  background-color:rgba(244, 249, 252, 0.993);
+}
+.form-div textarea {
+  font-size: 16px;
+  width: 90%;
+}
+.form-div input {
+  font-size: 18px;
+  width: 60%;
+}
+
+.search-form-div {
+  justify-content: flex-end;
+}
+
+
+
+.search-form-div form {
   color: white;
 }
 
 .search-form p {
   color:white;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .search-submit {
