@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='new-note-div flex'>
+  <p class='note-button'>Edit Note</p>
+</div>
+
+<div class="form-div">
+  <form action="{% url 'edit_note' pk=note.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div>
+      <button class='button-function' type="submit">Update Note</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

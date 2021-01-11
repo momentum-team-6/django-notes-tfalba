@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Notes</title>
+  <link rel="stylesheet" href="{% static 'css/tachyons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Acme&family=Dosis:wght@200;300;400;500;600;700;800&family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=Indie+Flower&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="body" >
+  <div class="header">
+    <h1><a class="header-nav" href="{% url 'notes_list' %}">My Django Notes</a></h1>
+  </div>
+  <div class='content-block'>
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>

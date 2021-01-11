@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load tz %}
+
+{% block content %}
+<div class='note-list-container p5 pb50'>
+  <h2><strong>{{ note.title }}</strong></h2>
+
+  {% if note.labels %}
+  
+  <div class='flex'>
+    {% for label in note.labels.all %}
+    <p class='label-button'> {{ label }}</p>
+    {% endfor %}
+  </div>
+
+  {% endif %}
+
+
+  <p class='note-detail-preview'>{{ note.body }}</p>
+
+  {% localtime on %}
+  
+  <p><strong>Created at:</strong> {{ note.created_at }}</p>
+  <p><strong>Last Updated at:</strong> {{ note.modified_at }}</p>
+  
+  {% endlocaltime %}
+
+  <a class='button-function edit' href="{% url 'edit_note' pk=note.pk %}">Edit</a>
+  <a class='button-function delete' href="{% url 'delete_note' pk=note.pk %}">Delete</a>
+  
+  {% if comments %}
+  <div style='margin-top:40px;'><h3>Comments</h3>
+    {% for comment in comments %}
+    <div class='flex' style="background-color: #00000080;">
+      <p class='comment' >{{ comment.text }}</p><p class='comment-time'>{{ comment.timestamp }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+<!-- Next render comments for each note if they exist - will first need to add comments to context -->
+
+
+
+<!-- Turn this into a form for adding comments to a particular note -->
+<div class='ml20' >
+  <p><a class='note-button' href="{% url 'add_comment' pk=note.pk %}">Add Comment</a></p>
+</div>
+
+
+{% endblock %}
